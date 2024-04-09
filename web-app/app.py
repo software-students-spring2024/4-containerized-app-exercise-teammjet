@@ -4,6 +4,7 @@ import bson
 from pymongo import MongoClient
 from PIL import Image, UnidentifiedImageError
 from flask import Flask, render_template, request, jsonify
+
 # from machine-learning-client.classification import classify
 
 # instantiate the app
