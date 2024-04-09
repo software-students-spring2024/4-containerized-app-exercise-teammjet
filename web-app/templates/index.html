@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item Classification</title>
+  </head>
+  <body>
+    <div id="content">
+      <div id="image-input">
+        <h2>Upload or Capture Image</h2>
+        <div id="container">
+          <!-- Image by Freepik https://www.freepik.com/free-vector/image-upload-concept-landing-page_5702640.htm#page=2&position=3&from_view=search&track=ais&uuid=6cc44562-8f9d-47c6-a4d6-68570598c350 -->
+          <img
+            id="placeholder"
+            src="{{url_for('static', filename='images/placeholder.jpg')}}"
+            alt="Image to represent uploading images"
+            width="640px"
+            draggable="false"
+          />
+          <video id="video-stream" width="640px" height="480px" autoplay></video>
+          <canvas id="canvas" width="640px" height="480px"></canvas>
+          <img id="uploaded-image" src="" alt="Uploaded or captured image" draggable="false" />
+        </div>
+        <div id="options">
+          <input type="file" id="upload-input" accept="image/*" onchange="handleUpload()" />
+          <button class="btn" onclick="openDialog()">Select from Computer</button>
+          <button id="start-camera" class="btn" onclick="startCamera()">Start Camera</button>
+          <button id="capture" class="btn" onclick="captureImage()">
+            Capture Image from Camera
+          </button>
+        </div>
+      </div>
+      <div id="results">
+        <!-- TODO: show the results -->
+      </div>
+    </div>
+
+    <style>
+      #content {
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+      }
+
+      #results,
+      #image-input {
+        display: inline-block;
+        width: 640px;
+      }
+
+      #canvas,
+      #results,
+      #capture,
+      #upload-input,
+      #video-stream {
+        display: none;
+      }
+
+      #image-input h2 {
+        display: flex;
+        justify-content: center;
+        color: #580579;
+        margin: 32px;
+      }
+
+      #container {
+        border: 4px solid #580579;
+        width: 640px;
+        height: 480px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #uploaded-image {
+        max-height: 480px;
+        max-width: 640px;
+      }
+
+      #options {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 16px;
+      }
+
+      .btn {
+        margin: 16px;
+        padding: 20px;
+        border-radius: 8px;
+        width: 240px;
+        font-size: larger;
+        background-color: #580579;
+        color: white;
+      }
+    </style>
+
+    <script>
+      const upload = document.getElementById("upload-input")
+      const video = document.getElementById("video-stream")
+      const captureBtn = document.getElementById("capture")
+      const startBtn = document.getElementById("start-camera")
+      const placeholder = document.getElementById("placeholder")
+      const uploadedImg = document.getElementById("uploaded-image")
+
+      function openDialog() {
+        upload.click()
+      }
+
+      function handleUpload() {
+        const selectedFile = upload.files[0]
+        const fileReader = new FileReader()
+        fileReader.onload = function (event) {
+          uploadImage(event.target.result)
+        }
+        fileReader.readAsDataURL(selectedFile)
+      }
+
+      function startCamera() {
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then(function (stream) {
+            video.srcObject = stream
+          })
+          .catch((error) => {
+            console.error("There was an error opening your camera: ", error)
+          })
+
+        video.style.display = "block"
+        captureBtn.style.display = "block"
+        placeholder.style.display = "none"
+        startBtn.style.display = "none"
+        uploadedImg.src = ""
+      }
+
+      function captureImage() {
+        canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height)
+        const imageData = canvas.toDataURL("image/jpeg")
+        uploadImage(imageData)
+        video.style.display = "none"
+        captureBtn.style.display = "none"
+        startBtn.style.display = "block"
+      }
+
+      function uploadImage(imageData) {
+        uploadedImg.src = imageData
+        placeholder.style.display = "none"
+
+        fetch(imageData)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const formData = new FormData()
+            const fileExtension = blob.type.split("/")[1]
+            formData.append("image", blob, `image.${fileExtension}`)
+
+            fetch("/upload", {
+              method: "POST",
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                // TODO: update results div with classification
+                console.log(data)
+              })
+              .catch((error) => {
+                console.error("Error when sending the image:", error)
+              })
+          })
+      }
+    </script>
+  </body>
+</html>
