@@ -23,10 +23,10 @@ img = Image.open("table_sample.jpg")
 img_t = transform(img)
 batch_t = torch.unsqueeze(img_t,0)
 
-    #evaluate
-    alexnet.eval()
-    out = alexnet(batch_t)
-    print(out.shape)
+#evaluate
+alexnet.eval()
+out = alexnet(batch_t)
+print(out.shape)
 
 #parsing the result
 with open('imagenet_classes.txt') as f:
