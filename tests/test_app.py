@@ -4,7 +4,7 @@ import os
 import sys
 import pytest
 #read a file from another folder
-sys.path.append('/Users/marcetter/software_engineering/4-containerized-app-exercise-teammjet/machine-learning-client')
+sys.path.append('../4-containerized-app-exercise-teammjet/machine-learning-client/')
 import classification
 buffer = classification.io.BytesIO()
 
