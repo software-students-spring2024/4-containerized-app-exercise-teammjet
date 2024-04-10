@@ -1,10 +1,12 @@
+#code from learnopencv tutorial 
 from torchvision import models 
 import torch
+import io
 dir(models)
 #establish alexnet model
 alexnet = models.alexnet(pretrained = True)
 
-#from learnopencv tutorial create transform
+#create transform
 from torchvision import transforms
 transform = transforms.Compose([            #[1]
  transforms.Resize(256),                    #[2]
@@ -17,20 +19,35 @@ transform = transforms.Compose([            #[1]
 
 #get image and batch(not sure what batch is)
 from PIL import Image
-img = Image.open("table_sample.jpg")
-img_t = transform(img)
-batch_t = torch.unsqueeze(img_t,0)
 
-#evaluate
-alexnet.eval()
-out = alexnet(batch_t)
-print(out.shape)
+def convert_img(image: io.BytesIO):
+    image_binary = image.getvalue()
+    image = Image.open(io.BytesIO(image_binary))
+    return evaluate(image)
 
-#parsing the result
-with open('imagenet_classes.txt') as f:
-    classes = [line.strip() for line in f.readlines()]
 
-_, index = torch.max(out, 1)
+def evaluate(img):
+    img_t = transform(img)
+    batch_t = torch.unsqueeze(img_t,0)
+
+    #evaluate
+    alexnet.eval()
+    out = alexnet(batch_t)
+    print(out.shape)
+
+    #parsing the result
+    with open('imagenet_classes.txt') as f:
+        classes = [line.strip() for line in f.readlines()]
+
+    _, index = torch.max(out, 1)
  
-percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-print(classes[index[0]], percentage[index[0]].item())
+    percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+    print(classes[index[0]], percentage[index[0]].item())
+    return classes[index[0]]
+    
+
+#tests for now DELETE LATER
+image = Image.open("table_sample.jpg")
+buffer = io.BytesIO()
+image.save(buffer, format="jpeg")
+print(convert_img(buffer))
