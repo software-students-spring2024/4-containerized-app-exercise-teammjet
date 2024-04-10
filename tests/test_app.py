@@ -5,7 +5,8 @@ import sys
 import pytest
 #read a file from another folder
 sys.path.append('../4-containerized-app-exercise-teammjet/machine-learning-client/')
-import classification
+import classification #if you run pytest from test class, there will be a module import error
+#run instead from project folder
 buffer = classification.io.BytesIO()
 
 class AppTests(TestCase):#do not need to house test functions inside class, only need to execute command pytest from inside test
