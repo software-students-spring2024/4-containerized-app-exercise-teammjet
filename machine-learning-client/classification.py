@@ -2,7 +2,7 @@
 from torchvision import models 
 import torch
 from flask import Flask, request, jsonify
-from flask import CORS, cross_origin
+from flask_cors import CORS, cross_origin
 import io
 import base64
 
@@ -67,4 +67,4 @@ def handle_req():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port = 5000)
+    app.run(host='0.0.0.0', port = 5002)
