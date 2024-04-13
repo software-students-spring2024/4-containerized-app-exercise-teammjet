@@ -1,8 +1,14 @@
 #code from learnopencv tutorial 
 from torchvision import models 
 import torch
+from flask import Flask, request, jsonify
+from flask import CORS, cross_origin
 import io
+import base64
+
 dir(models)
+app = Flask(__name__)
+CORS(app)
 #establish alexnet model
 alexnet = models.alexnet(pretrained = True)
 
@@ -51,3 +57,14 @@ image = Image.open("table_sample.jpg")
 buffer = io.BytesIO()
 image.save(buffer, format="jpeg")
 print(convert_img(buffer))
+
+@app.route("/evalute", methods = ['POST'])
+def handle_req():
+    data = request.json['data']
+    myimg = base64.b64decode(data)
+    image = Image.frombytes("RGBA", (image.size), myimg, "raw")
+    result = evaluate(image)
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port = 5000)
