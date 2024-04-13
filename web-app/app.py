@@ -1,6 +1,5 @@
 import io
 import base64
-import bson
 from pymongo import MongoClient
 from PIL import Image, UnidentifiedImageError
 from flask import Flask, render_template, request, jsonify
