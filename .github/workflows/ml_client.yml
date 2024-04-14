@@ -1,7 +1,7 @@
 name: ml_client
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "marc-branch", "johan-branch", "machine-learning", "web-app"]
 jobs:
   build:
     runs-on: ubuntu-latest
