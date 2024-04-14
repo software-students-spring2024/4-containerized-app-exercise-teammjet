@@ -28,4 +28,4 @@ jobs:
       - name: Test with pytest
         run: |
           pipenv run pip install pytest
-          pytest machine-learning-client/tests/test_app.py
+          pipenv run python -m pytest machine-learning-client/test/test_client.py
