@@ -7,6 +7,8 @@ name = "pypi"
 tensorflow = "*"
 torchvision = "*"
 pytest = "*"
+flask-cors = "*"
+tensorflow-io-gcs-filesystem = "*"
 
 [dev-packages]
 
