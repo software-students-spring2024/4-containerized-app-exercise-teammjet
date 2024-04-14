@@ -4,17 +4,27 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-tensorflow = "*"
-pytest = "*"
+io = "*"
+torch = "*"
+base64 = "*"
+pylint = "*"
+black = "*"
+torchvision = "*"
+flask = "*"
+flask-cors = "*"
 tensorflow-io-gcs-filesystem = "*"
-numpy = "*"
 pytest_mock = "*"
 bson = "*"
-pymongo = "*"
-pillow = "*"
-flask-cors = "*"
+
+black = "*"
 flask = "*"
-torchvision = "*"
+pymongo = "*"
+pytest = "*"
+pillow = "*"
+pytest-mock = "*"
+requests = "*"
+python-dotenv = "*"
+bson = "*"
 
 [dev-packages]
 
