@@ -5,14 +5,19 @@ name = "pypi"
 
 [packages]
 tensorflow = "*"
-torchvision = "*"
 pytest = "*"
-flask-cors = "*"
 tensorflow-io-gcs-filesystem = "*"
 numpy = "*"
 pytest_mock = "*"
 bson = "*"
-
+pymongo = "*"
+io = "*"
+base64 = "*"
+torch = "*"
+PIL = "*"
+flask-cors = "*"
+flask = "*"
+torchvision = "*"
 
 [dev-packages]
 
