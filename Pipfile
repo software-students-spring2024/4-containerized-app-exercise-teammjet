@@ -10,8 +10,9 @@ pytest = "*"
 flask-cors = "*"
 tensorflow-io-gcs-filesystem = "*"
 numpy = "*"
+pytest_mock = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.10"

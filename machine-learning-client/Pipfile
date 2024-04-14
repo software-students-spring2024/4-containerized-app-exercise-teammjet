@@ -13,6 +13,7 @@ torchvision = "*"
 flask = "*"
 flask-cors = "*"
 tensorflow-io-gcs-filesystem = "*"
+pytest_mock = "*"
 
 [dev-packages]
 
