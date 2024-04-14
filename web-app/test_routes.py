@@ -37,5 +37,9 @@ def test_upload(client):
 
         # Optionally check the response content if specific outputs are expected
         response_data = response.json
-        assert 'image_data' in response_data  # Add further checks based on expected response
+        assert 'classification' in response_data  # Add further checks based on expected response
+        assert response_data['classification'] == "acoustic guitar"
 
+def test_upload_fail(client):
+    response = client.post('/upload', data={}, content_type='multipart/form-data')
+    assert response.status_code == 400
