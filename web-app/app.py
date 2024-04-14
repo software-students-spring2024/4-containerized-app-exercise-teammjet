@@ -1,22 +1,16 @@
-"""
-This module contains routes for handling image data, including uploading images for classification.
-"""
-
 import io
 import base64
 import bson
 import requests
-import pymongo.errors
 from pymongo import MongoClient
 from PIL import Image, UnidentifiedImageError
 from flask import Flask, render_template, request, jsonify
-
 
 # instantiate the app
 app = Flask(__name__)
 
 # connect to the database
-client = MongoClient("mongodb://db:27017/")
+client = MongoClient("localhost", 27017)
 db = client["project4"]
 images = db["images"]
 
@@ -26,7 +20,7 @@ try:
     # verify the connection works by pinging the database
     client.admin.command("ping")  # The ping command is cheap and does not require auth.
     print(" *", "Connected to MongoDB!")  # if we get here, the connection worked!
-except pymongo.errors.ConnectionFailure as e:
+except Exception as e:
     # the ping command failed, so the connection is not available.
     print(" * MongoDB connection error:", e)  # debug
 
@@ -69,9 +63,7 @@ def upload():
     image_base64 = base64.b64encode(image_binary).decode("utf-8")
 
     response = requests.post(
-        "http://machine-learning-client:5002/classify",
-        json={"image": image_base64},
-        timeout=30,
+        "http://localhost:5002/classify", json={"image": image_base64}
     )
 
     if response.status_code != 200:
@@ -88,4 +80,4 @@ def upload():
 
 # run the app
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=5001, debug=True)

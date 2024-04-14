@@ -7,8 +7,8 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "5001:5001"
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     depends_on:
       - db
 
@@ -18,10 +18,11 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - "5002:5002"
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     depends_on:
       - db
+
 
   db:
     image: mongo
@@ -29,10 +30,12 @@ services:
       - "27017:27017"
     volumes:
       - ./data:/data/db
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-    #   - MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-    #   - MONGO_INITDB_DATABASE: "db"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE: "db"
 
-volumes:
+volums:
   mongo-data:
+  
+  
