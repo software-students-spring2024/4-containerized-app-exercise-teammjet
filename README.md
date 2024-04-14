@@ -21,3 +21,11 @@ To install the required dependencies and run the program, run the following comm
 To open the app, open a web browser and navigate to [localhost:5001](http://localhost:5001/). Do not go to the address that the program tells you to navigate to.
 
 Build a containerized app that uses machine learning. See [instructions](./instructions.md) for details.
+
+
+# Contributors
+
+- [Eleazer Neri](https://github.com/afknero)
+- [Terry Guo](https://github.com/TerryQtt)
+- [Marc Etter](https://github.com/Morcupine)
+- [Johan Gallardo](https://github.com/JohanGallardo)
