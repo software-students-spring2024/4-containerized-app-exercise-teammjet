@@ -1,10 +1,10 @@
 import io
 import base64
+import bson
+import requests
 from pymongo import MongoClient
 from PIL import Image, UnidentifiedImageError
 from flask import Flask, render_template, request, jsonify
-
-# from machine-learning-client.classification import classify
 
 # instantiate the app
 app = Flask(__name__)
@@ -49,6 +49,10 @@ def upload():
     except UnidentifiedImageError:
         return jsonify({"error": "Invalid image format."}), 400
 
+    # convert RGBA image to RGB
+    if image.mode == "RGBA":
+        image = image.convert("RGB")
+
     # determine the image format from the file extension
     image_format = file.content_type.split("/")[-1].upper()
 
@@ -56,23 +60,22 @@ def upload():
     buffer = io.BytesIO()
     image.save(buffer, format=image_format)
     image_binary = buffer.getvalue()
-
-    # TODO: import ML program
-    # # save image and classification to MongoDB
-    # doc = {
-    #     "image_data": bson.binary.Binary(image_binary),
-    #     "classification": classify(image_binary)
-    # }
-    # images.insert_one(doc)
-
-    # convert binary data back to base64 for response
     image_base64 = base64.b64encode(image_binary).decode("utf-8")
 
-    # return JSON response with image data and classification
-    return jsonify(
-        {"image_data": image_base64}
-        # {"image_data": image_base64, "classification": doc["classification"]}
+    response = requests.post(
+        "http://localhost:5002/classify", json={"image": image_base64}
     )
+
+    if response.status_code != 200:
+        return jsonify({"error": "Failed to process the image."}), 500
+    result = response.json()
+
+    # save image and classification to MongoDB
+    doc = {"image_data": bson.binary.Binary(image_binary), "classification": result}
+    images.insert_one(doc)
+
+    # return JSON response with image data and classification
+    return jsonify({"classification": result})
 
 
 # run the app

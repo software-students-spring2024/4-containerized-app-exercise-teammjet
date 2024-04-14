@@ -11,6 +11,7 @@ pymongo = "*"
 pytest = "*"
 pillow = "*"
 pytest-mock = "*"
+requests = "*"
 
 [dev-packages]
 
