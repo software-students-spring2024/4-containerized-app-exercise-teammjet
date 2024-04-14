@@ -12,6 +12,7 @@ black = "*"
 torchvision = "*"
 flask = "*"
 flask-cors = "*"
+tensorflow-io-gcs-filesystem = "*"
 
 [dev-packages]
 
