@@ -1,16 +1,24 @@
 import io
+import os
 import base64
 import bson
 import requests
+import pymongo
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
 from PIL import Image, UnidentifiedImageError
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
 
+load_dotenv()
+user = os.environ["MONGO_INITDB_ROOT_USERNAME"]
+passw = os.environ["MONGO_INITDB_ROOT_PASSWORD"]
+uri = f"mongodb://{user}:{passw}@db:27017/db?authSource=admin"
 # instantiate the app
 app = Flask(__name__)
 
 # connect to the database
-client = MongoClient("localhost", 27017)
+client = MongoClient(uri, server_api=ServerApi("1"))
 db = client["project4"]
 images = db["images"]
 
@@ -63,7 +71,7 @@ def upload():
     image_base64 = base64.b64encode(image_binary).decode("utf-8")
 
     response = requests.post(
-        "http://localhost:5002/classify", json={"image": image_base64}
+        "http://machine-learning-client:5002/classify", json={"image": image_base64}
     )
 
     if response.status_code != 200:
