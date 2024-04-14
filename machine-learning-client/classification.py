@@ -1,4 +1,7 @@
-# code from learnopencv tutorial
+"""
+This module contains routes and functions for image classification using a pre-trained AlexNet model.
+"""
+
 import io
 import base64
 import torch
