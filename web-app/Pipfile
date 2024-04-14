@@ -12,6 +12,7 @@ pytest = "*"
 pillow = "*"
 pytest-mock = "*"
 requests = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
