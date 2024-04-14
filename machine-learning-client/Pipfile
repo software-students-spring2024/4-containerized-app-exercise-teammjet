@@ -8,6 +8,7 @@ pylint = "*"
 black = "*"
 torchvision = "*"
 flask = "*"
+flask-cors = "*"
 
 [dev-packages]
 
