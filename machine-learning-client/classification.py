@@ -5,6 +5,9 @@ import io
 dir(models)
 #establish alexnet model
 alexnet = models.alexnet(pretrained = True)
+import sys
+#read a file from another folder
+sys.path.append('../machine-learning-client/')
 
 #create transform
 from torchvision import transforms
