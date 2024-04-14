@@ -1,16 +1,6 @@
 version: '3.8'
 
 services:
-  web-app:
-    build:
-      context: ./web-app
-      dockerfile: ./Dockerfile
-    ports:
-      - "5001:5001"
-    env_file:
-      - .env
-    depends_on:
-      - db
 
   machine-learning-client:
     build:
@@ -23,6 +13,16 @@ services:
     depends_on:
       - db
 
+  web-app:
+    build:
+      context: ./web-app
+      dockerfile: ./Dockerfile
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env
+    depends_on:
+      - db
 
   db:
     image: mongo
@@ -31,11 +31,11 @@ services:
     volumes:
       - ./data:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      - MONGO_INITDB_DATABASE: "db"
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE="project4"
 
-volums:
+volumes:
   mongo-data:
   
   
