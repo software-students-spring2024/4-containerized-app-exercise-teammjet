@@ -51,11 +51,12 @@ def evaluate(img):
     with open("imagenet_classes.txt", encoding="utf-8") as f:
         classes = [line.strip() for line in f.readlines()]
 
-    _, index = torch.max(out, 1)
+    _, indices = torch.sort(out, descending=True)
 
     percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-    print(classes[index[0]], percentage[index[0]].item())
-    return classes[index[0]]
+    print([(classes[idx], percentage[idx].item()) for idx in indices[0][:5]])
+    arr = [(classes[idx], percentage[idx].item()) for idx in indices[0][:5]]
+    return arr
 
 
 @app.route("/classify", methods=["POST"])
@@ -76,3 +77,5 @@ def handle_req():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002)
+
+
