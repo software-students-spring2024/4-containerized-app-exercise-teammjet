@@ -1,4 +1,6 @@
 ![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg)
+[![Machine Learning Client CI](https://github.com/software-students-spring2024/4-containerized-app-exercise-teammjet/blob/main/.github/workflows/ml_client.yml/badge.svg)](https://github.com/software-students-spring2024/4-containerized-app-exercise-teammjet/blob/main/.github/workflows/ml_client.yml)
+[![Web App CI/CD](https://github.com/software-students-spring2024/4-containerized-app-exercise-teammjet/blob/main/.github/workflows/web_app.yml/badge.svg)](https://github.com/software-students-spring2024/4-containerized-app-exercise-teammjet/blob/main/.github/workflows/web_app.yml)
 
 
 # Campus Exchange Auto-Labeler
