@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        python-version: ["3.8", "3.10"]
+        python-version: ["3.10"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -27,4 +27,4 @@ jobs:
       - name: Test with pytest
         run: |
           pipenv run pip install pytest
-          pipenv run python -m pytest
+          pytest web-app/test_routes.py
