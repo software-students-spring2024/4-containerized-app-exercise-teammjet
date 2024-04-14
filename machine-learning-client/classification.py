@@ -2,23 +2,6 @@
 import io
 import base64
 import torch
-import io
-dir(models)
-#establish alexnet model
-alexnet = models.alexnet(pretrained = True)
-
-#create transform
-from torchvision import transforms
-transform = transforms.Compose([            #[1]
- transforms.Resize(256),                    #[2]
- transforms.CenterCrop(224),                #[3]
- transforms.ToTensor(),                     #[4]
- transforms.Normalize(                      #[5]
- mean=[0.485, 0.456, 0.406],                #[6]
- std=[0.229, 0.224, 0.225]                  #[7]
- )])
-
-#get image and batch(not sure what batch is)
 from PIL import Image
 from flask_cors import CORS
 from flask import Flask, request, jsonify
@@ -94,5 +77,3 @@ def handle_req():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002)
-
-
