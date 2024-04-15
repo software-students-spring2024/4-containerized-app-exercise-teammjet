@@ -13,31 +13,31 @@ class AppTests(TestCase):#do not need to house test functions inside class, only
     #folder and make sure all test functions and test files are prefixed with test_
 
     def test_chair_fancy(self):
-        image = Image.open("tests/chair_fancy.jpg")
+        image = Image.open("machine-learning-client/tests/chair_fancy.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result[0][0] == 'folding chair'
 
     def test_chair(self):
-        image = Image.open("tests/chair.jpg")
+        image = Image.open("machine-learning-client/tests/chair.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result[0][0] == 'folding chair'
 
     def test_clock_soendrum(self):
-        image = Image.open("tests/clock_soendrum.jpg")
+        image = Image.open("machine-learning-client/tests/clock_soendrum.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result[0][0] == 'clock'
     
     def test_guitar(self):
-        image = Image.open("tests/guitar.jpg")
+        image = Image.open("machine-learning-client/tests/guitar.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result[0][0] == 'guitar'
 
     def test_table_sample(self):
-        image = Image.open("tests/table_sample.jpg")
+        image = Image.open("machine-learning-client/tests/table_sample.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result[0][0] == 'desk'
