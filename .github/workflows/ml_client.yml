@@ -34,4 +34,4 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: password
         run: |
           pipenv run pip install pytest
-          pipenv run python -m pytest
+          pipenv run python -m pytest test_app.py

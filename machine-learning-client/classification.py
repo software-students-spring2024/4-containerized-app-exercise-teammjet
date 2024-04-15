@@ -52,7 +52,7 @@ def evaluate(img):
     print(out.shape)
 
     # parsing the result
-    with open("imagenet_classes.txt", encoding="utf-8") as f:
+    with open("4-containerized-app-exercise-teammjet/machine-learning-client/imagenet_classes.txt", encoding="utf-8") as f:
         classes = [line.strip() for line in f.readlines()]
 
     _, indices = torch.sort(out, descending=True)
