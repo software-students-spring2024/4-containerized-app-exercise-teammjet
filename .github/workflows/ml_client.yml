@@ -25,7 +25,9 @@ jobs:
       - name: Turn on 'editable' mode
         run: |
           pipenv install -e .
+      - name: Change to project directory
+        run: cd machine-learning-client
       - name: Test with pytest
         run: |
           pipenv run pip install pytest
-          pipenv run python -m pytest machine-learning-client/tests/test_app.py
+          pipenv run python -m pytest
