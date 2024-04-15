@@ -3,6 +3,9 @@ on:
   push:
     branches: ["main", "marc-branch", "johan-branch", "machine-learning", "web-app"]
 jobs:
+  env:
+    MONGO_INITDB_ROOT_USERNAME: username
+    MONGO_INITDB_ROOT_PASSWORD: password
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
