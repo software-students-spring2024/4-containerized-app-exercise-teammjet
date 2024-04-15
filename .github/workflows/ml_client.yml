@@ -25,9 +25,11 @@ jobs:
       - name: Turn on 'editable' mode
         run: |
           pipenv install -e .
-      - name: cd into machine-learning-client
+      - name: cd into machine-learning-client and then into tests
         run: |
           cd machine-learning-client
+          ls
+          cd tests
           ls
       - name: Test with pytest
         env:
@@ -35,5 +37,4 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: password
         run: |
           pipenv run pip install pytest
-          cd tests
           pipenv run python -m pytest test_app.py
