@@ -32,7 +32,8 @@
         </div>
       </div>
       <div id="results">
-        <!-- TODO: show the results -->
+        <h2>Results</h2>
+        <div id="results-container"></div>
       </div>
     </div>
 
@@ -57,10 +58,9 @@
         display: none;
       }
 
-      #image-input h2 {
+      h2 {
         display: flex;
         justify-content: center;
-        color: #580579;
         margin: 32px;
       }
 
@@ -93,6 +93,39 @@
         background-color: #580579;
         color: white;
       }
+
+      #results-container {
+        height: 480px;
+        margin: 64px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+
+      .result {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .item {
+        width: 96px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        font-size: larger;
+        font-weight: bold;
+        color: #580579;
+      }
+
+      .bar {
+        color: white;
+        background-color: #580579;
+        display: flex;
+        align-items: center;
+        width: 400px;
+        height: 48px;
+        padding-left: 16px;
+      }
     </style>
 
     <script>
@@ -102,6 +135,8 @@
       const startBtn = document.getElementById("start-camera")
       const placeholder = document.getElementById("placeholder")
       const uploadedImg = document.getElementById("uploaded-image")
+      const results = document.getElementById("results")
+      const resultsContainer = document.getElementById("results-container")
 
       function openDialog() {
         upload.click()
@@ -159,13 +194,41 @@
             })
               .then((response) => response.json())
               .then((data) => {
-                // TODO: update results div with classification
                 console.log(data)
+                results.style.display = "block"
+                resultsContainer.innerHTML = '';
+                data.forEach((result) => {
+                  const resultDiv = processResults(result)
+                  resultsContainer.appendChild(resultDiv)
+                })
               })
               .catch((error) => {
-                console.error("Error when sending the image:", error)
+                console.error("Error sending the image:", error)
               })
           })
+      }
+
+      function processResults(result) {
+        const item = result[0].split(',')[0].trim()
+        const percentage = result[1].toFixed(2)
+
+        const resultDiv = document.createElement("div")
+        resultDiv.className = "result"
+
+        const itemDiv = document.createElement("div")
+        itemDiv.className = "item"
+        itemDiv.textContent = item
+        
+        const barDiv = document.createElement("div")
+        barDiv.className = "bar"
+        barDiv.textContent = percentage + "%"
+        const width = Math.max(48, (parseFloat(percentage) / 100) * 400);
+        barDiv.style.width = width + 'px';
+
+        resultDiv.appendChild(itemDiv)
+        resultDiv.appendChild(barDiv)
+
+        return resultDiv
       }
     </script>
   </body>

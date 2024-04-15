@@ -1,4 +1,8 @@
-# code from learnopencv tutorial
+"""
+This module contains routes and functions for image classification 
+using a pre-trained AlexNet model.
+"""
+
 import io
 import base64
 import torch
@@ -54,8 +58,8 @@ def evaluate(img):
     _, indices = torch.sort(out, descending=True)
 
     percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
-    print([(classes[idx], percentage[idx].item()) for idx in indices[0][:5]])
-    arr = [(classes[idx], percentage[idx].item()) for idx in indices[0][:5]]
+    print([(classes[idx], percentage[idx].item()) for idx in indices[0][:3]])
+    arr = [(classes[idx], percentage[idx].item()) for idx in indices[0][:3]]
     return arr
 
 
@@ -77,5 +81,3 @@ def handle_req():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002)
-
-
