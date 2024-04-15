@@ -13,7 +13,7 @@ class AppTests(TestCase):#do not need to house test functions inside class, only
     #folder and make sure all test functions and test files are prefixed with test_
 
     def test_chair_fancy(self):
-        image = Image.open("machine-learning-client/tests/chair_fancy.jpg")
+        image = Image.open("tests/chair_fancy.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result[0][0] == 'folding chair'
