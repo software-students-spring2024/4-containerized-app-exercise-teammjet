@@ -28,6 +28,8 @@ jobs:
       - name: cd into machine-learning-client
         run: |
           cd machine-learning-client
+        run: |
+          ls
       - name: Test with pytest
         env:
           MONGO_INITDB_ROOT_USERNAME: username
