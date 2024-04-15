@@ -28,6 +28,6 @@ Build a containerized app that uses machine learning. See [instructions](./instr
 # Contributors
 
 - [Eleazer Neri](https://github.com/afknero)
-- [Terry Guo](https://github.com/TerryQtt)
+- [Terry Qiu](https://github.com/TerryQtt)
 - [Marc Etter](https://github.com/Morcupine)
 - [Johan Gallardo](https://github.com/JohanGallardo)
