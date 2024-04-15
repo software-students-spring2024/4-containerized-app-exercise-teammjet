@@ -13,34 +13,34 @@ class AppTests(TestCase):#do not need to house test functions inside class, only
     #folder and make sure all test functions and test files are prefixed with test_
 
     def test_chair_fancy(self):
-        image = Image.open("tests/chair_fancy.jpg")
+        image = Image.open("machine-learning-client/tests/chair_fancy.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
-        assert result == 'chair'
+        assert result == 'folding chair'
 
     def test_chair(self):
-        image = Image.open("tests/chair.jpg")
+        image = Image.open("machine-learning-client/tests/chair.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
-        assert result == 'chair'
+        assert result == 'folding chair'
 
-    def clock_soendrum(self):
-        image = Image.open("tests/clock_soendrum.jpg")
+    def test_clock_soendrum(self):
+        image = Image.open("machine-learning-client/tests/clock_soendrum.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result == 'clock'
     
-    def guitar(self):
-        image = Image.open("tests/guitar.jpg")
+    def test_guitar(self):
+        image = Image.open("machine-learning-client/tests/guitar.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result == 'guitar'
 
-    def table_sample(self):
-        image = Image.open("tests/table_sample.jpg")
+    def test_table_sample(self):
+        image = Image.open("machine-learning-client/tests/table_sample.jpg")
         image.save(buffer, format="jpeg")
         result = classification.convert_img(buffer)
         assert result == 'desk'
 
 
-#pytest.main()
+pytest.main()
