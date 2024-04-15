@@ -7,6 +7,10 @@ from flask_cors import CORS
 from flask import Flask, request, jsonify
 from torchvision import models, transforms
 
+import sys
+#read a file from another folder
+sys.path.append('../4-containerized-app-exercise-teammjet/machine-learning-client/')
+
 dir(models)
 app = Flask(__name__)
 CORS(app)
