@@ -3,9 +3,6 @@ on:
   push:
     branches: ["main", "marc-branch", "johan-branch", "machine-learning", "web-app"]
 jobs:
-  env:
-    MONGO_INITDB_ROOT_USERNAME: username
-    MONGO_INITDB_ROOT_PASSWORD: password
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -31,6 +28,9 @@ jobs:
       - name: Change to project directory
         run: cd machine-learning-client
       - name: Test with pytest
+        env:
+          MONGO_INITDB_ROOT_USERNAME: username
+          MONGO_INITDB_ROOT_PASSWORD: password
         run: |
           pipenv run pip install pytest
           pipenv run python -m pytest
