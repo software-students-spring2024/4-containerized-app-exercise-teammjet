@@ -31,6 +31,7 @@ jobs:
           ls
           cd tests
           ls
+          working-directory: tests
       - name: Test with pytest
         env:
           MONGO_INITDB_ROOT_USERNAME: username
