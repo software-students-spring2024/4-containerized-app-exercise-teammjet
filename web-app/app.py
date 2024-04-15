@@ -1,9 +1,13 @@
+"""
+This module contains routes for handling image data, including uploading images for classification.
+"""
+
 import io
 import os
 import base64
 import bson
 import requests
-import pymongo
+import pymongo.errors
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 from PIL import Image, UnidentifiedImageError
@@ -14,6 +18,7 @@ load_dotenv()
 user = os.environ["MONGO_INITDB_ROOT_USERNAME"]
 passw = os.environ["MONGO_INITDB_ROOT_PASSWORD"]
 uri = f"mongodb://{user}:{passw}@db:27017/db?authSource=admin"
+
 # instantiate the app
 app = Flask(__name__)
 
@@ -22,13 +27,12 @@ client = MongoClient(uri, server_api=ServerApi("1"))
 db = client["project4"]
 images = db["images"]
 
-
 # the following try/except block is a way to verify that the database connection is alive (or not)
 try:
     # verify the connection works by pinging the database
     client.admin.command("ping")  # The ping command is cheap and does not require auth.
     print(" *", "Connected to MongoDB!")  # if we get here, the connection worked!
-except Exception as e:
+except pymongo.errors.ConnectionFailure as e:
     # the ping command failed, so the connection is not available.
     print(" * MongoDB connection error:", e)  # debug
 
@@ -71,7 +75,9 @@ def upload():
     image_base64 = base64.b64encode(image_binary).decode("utf-8")
 
     response = requests.post(
-        "http://machine-learning-client:5002/classify", json={"image": image_base64}
+        "http://machine-learning-client:5002/classify",
+        json={"image": image_base64},
+        timeout=10,
     )
 
     if response.status_code != 200:
@@ -83,9 +89,9 @@ def upload():
     images.insert_one(doc)
 
     # return JSON response with image data and classification
-    return jsonify({"classification": result})
+    return jsonify(result)
 
 
 # run the app
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001)
