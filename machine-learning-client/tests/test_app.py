@@ -4,7 +4,7 @@ import os
 import pytest
 import sys
 #read a file from another folder
-#sys.path.append('../4-containerized-app-exercise-teammjet/machine-learning-client/')
+sys.path.append('../4-containerized-app-exercise-teammjet/machine-learning-client/')
 import classification #if you run pytest from test class, there will be a module import error
 #run instead from project folder
 buffer = classification.io.BytesIO()
